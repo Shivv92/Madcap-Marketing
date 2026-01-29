@@ -1,0 +1,240 @@
+:root {
+    --navy: #0e2a47; /* Based on Logo */
+    --gold: #f0a500; /* Based on Poster Header */
+    --gold-dark: #cfaa04;
+    --white: #ffffff;
+    --light: #f4f7f6;
+    --text: #333;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navbar */
+nav {
+    background: var(--white);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    color: var(--navy);
+    font-size: 1.2rem;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+.btn-nav {
+    background: var(--navy);
+    color: var(--white);
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+/* Hero */
+.hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #163b61 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.btn-main {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-main:hover {
+    background: #ffbe2e;
+    transform: translateY(-2px);
+}
+
+/* Packages */
+#packages {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: var(--navy);
+    margin-bottom: 40px;
+}
+
+.section-title.white { color: var(--white); }
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    padding: 20px;
+    text-align: center;
+    color: var(--white);
+}
+
+.blue-header { background: var(--navy); border-bottom: 4px solid var(--gold); }
+.gold-header { background: var(--gold); color: var(--navy); }
+
+.card-header h3 { font-size: 1.3rem; margin-bottom: 5px; }
+.card-header p { font-size: 0.9rem; opacity: 0.9; font-weight: 400; }
+
+/* Tables within cards */
+.table-wrapper { padding: 0; }
+
+table { width: 100%; border-collapse: collapse; text-align: center; }
+
+th {
+    background: #f8f9fa;
+    padding: 12px;
+    font-size: 0.85rem;
+    color: var(--navy);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+}
+
+tr:last-child td { border-bottom: none; }
+
+/* Outreach Card Body */
+.card-body {
+    padding: 30px;
+    text-align: center;
+}
+
+.price-big {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.per-call { color: #777; margin-bottom: 20px; }
+
+.desc { margin-bottom: 25px; font-size: 0.95rem; }
+
+.btn-card {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: var(--navy);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+/* Contact Footer */
+.footer-section {
+    background: var(--navy);
+    padding: 60px 0 20px;
+    color: var(--white);
+    text-align: center;
+}
+
+.contact-grid {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.contact-box h3 {
+    color: var(--gold);
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contact-box a {
+    display: block;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    opacity: 0.9;
+}
+
+.contact-box a:hover { color: var(--gold); opacity: 1; }
+
+.copyright {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .nav-flex { flex-direction: column; gap: 15px; }
+}
