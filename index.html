@@ -3,27 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madcap Marketing | Packages</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Madcap Marketing | 3D Experience</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --navy: #0e2a47;
+            --gold: #f0a500;
+            --gold-dark: #cfaa04;
+            --white: #ffffff;
+            --light: #f4f7f6;
+            --text: #333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- 3D Navbar --- */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo Design (No Image Needed) */
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--navy);
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .logo span.m-icon {
+            background: var(--gold);
+            color: var(--navy);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transform: skew(-10deg);
+            box-shadow: 3px 3px 0px var(--navy);
+        }
+
+        .btn-nav {
+            background: var(--navy);
+            color: var(--white);
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(14, 42, 71, 0.3);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 42, 71, 0.5);
+        }
+
+        /* --- 3D Hero Section --- */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, #051626 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            perspective: 1000px; /* Enables 3D space */
+        }
+
+        .hero-content {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-15px) rotateX(2deg); }
+            100% { transform: translateY(0px) rotateX(0deg); }
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .hero h1 span { color: var(--gold); }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-main {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--navy);
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(240, 165, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(240, 165, 0, 0.6);
+            background: #ffc438;
+        }
+
+        /* --- 3D Cards Section --- */
+        #packages { padding: 80px 0; perspective: 1000px; }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--navy);
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 5px;
+            background: var(--gold);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: 0.4s ease;
+            transform-style: preserve-3d;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* The 3D Hover Effect */
+        .card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 30px 50px rgba(14, 42, 71, 0.2);
+            border-color: var(--gold);
+        }
+
+        .card-header { padding: 25px; text-align: center; color: var(--white); }
+        .blue-header { background: var(--navy); border-bottom: 5px solid var(--gold); }
+        .gold-header { background: var(--gold); color: var(--navy); }
+
+        .card-header h3 { font-size: 1.5rem; margin-bottom: 5px; font-weight: 800; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; text-align: center; }
+        th { background: #f8f9fa; padding: 15px; font-size: 0.85rem; color: var(--navy); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
+        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+        tr:last-child td { border-bottom: none; }
+
+        /* Outreach Card */
+        .card-body { padding: 40px; text-align: center; }
+        .price-big { font-size: 3rem; font-weight: 800; color: var(--navy); text-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
+        .per-call { color: #888; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
+        
+        .btn-card {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-card:hover { background: var(--gold); color: var(--navy); }
+
+        /* --- Footer --- */
+        .footer-section {
+            background: var(--navy);
+            padding: 80px 0 30px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        .contact-box h3 { color: var(--gold); margin-bottom: 20px; font-size: 1.5rem; }
+        .contact-box a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            transition: 0.2s;
+        }
+        .contact-box a:hover { color: var(--gold); transform: translateX(5px); }
+
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; font-size: 0.9rem; opacity: 0.6; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-flex { flex-direction: column; gap: 20px; }
+        }
+    </style>
 </head>
 <body>
 
     <nav>
         <div class="container nav-flex">
             <div class="logo">
-                <img src="logo.jpg" alt="Madcap Marketing Logo">
-                <span>MADCAP MARKETING</span>
+                <span class="m-icon">M</span>
+                <span>MADCAP</span>
             </div>
             <a href="#contact" class="btn-nav">Contact Us</a>
         </div>
     </nav>
 
     <header class="hero">
-        <div class="container">
-            <h1>Amplify Your Brand</h1>
+        <div class="container hero-content">
+            <h1>Amplify Your <span>Brand</span></h1>
             <p>From viral Reels to AI-driven content and direct outreach, we deliver results that craze.</p>
             <a href="#packages" class="btn-main">View Packages</a>
         </div>
@@ -37,84 +295,56 @@
                 
                 <div class="card">
                     <div class="card-header blue-header">
-                        <h3>The Creator Package</h3>
-                        <p>(Reels)</p>
+                        <h3>The Creator</h3>
+                        <p>(Reels Production)</p>
                     </div>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Quantity</th>
-                                    <th>Standard</th>
-                                    <th>With Collab</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>4 Reels</td>
-                                    <td>₹2,000</td>
-                                    <td>₹3,000</td>
-                                </tr>
-                                <tr>
-                                    <td>6 Reels</td>
-                                    <td>₹2,700</td>
-                                    <td>₹4,200</td>
-                                </tr>
-                                <tr>
-                                    <td>8 Reels</td>
-                                    <td>₹3,500</td>
-                                    <td>₹5,500</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th>Standard</th>
+                                <th>With Collab</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>4 Reels</td><td>â‚¹2,000</td><td>â‚¹3,000</td></tr>
+                            <tr><td>6 Reels</td><td>â‚¹2,700</td><td>â‚¹4,200</td></tr>
+                            <tr><td>8 Reels</td><td>â‚¹3,500</td><td>â‚¹5,500</td></tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="card">
                     <div class="card-header blue-header">
-                        <h3>The Futurist Package</h3>
-                        <p>(AI Reels)</p>
+                        <h3>The Futurist</h3>
+                        <p>(AI Generated Reels)</p>
                     </div>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Quantity</th>
-                                    <th>Standard</th>
-                                    <th>With Collab</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>3 Reels</td>
-                                    <td>₹900</td>
-                                    <td>₹1,650</td>
-                                </tr>
-                                <tr>
-                                    <td>5 Reels</td>
-                                    <td>₹1,250</td>
-                                    <td>₹2,500</td>
-                                </tr>
-                                <tr>
-                                    <td>7 Reels</td>
-                                    <td>₹1,800</td>
-                                    <td>₹3,550</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th>Standard</th>
+                                <th>With Collab</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>3 Reels</td><td>â‚¹900</td><td>â‚¹1,650</td></tr>
+                            <tr><td>5 Reels</td><td>â‚¹1,250</td><td>â‚¹2,500</td></tr>
+                            <tr><td>7 Reels</td><td>â‚¹1,800</td><td>â‚¹3,550</td></tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="card">
                     <div class="card-header gold-header">
-                        <h3>The Outreach Package</h3>
-                        <p>(Calling)</p>
+                        <h3>The Outreach</h3>
+                        <p>(Direct Calling)</p>
                     </div>
                     <div class="card-body">
-                        <div class="price-big">₹3 to ₹4</div>
-                        <p class="per-call">per call</p>
-                        <hr>
-                        <p class="desc">Professional cold calling and direct outreach to potential clients.</p>
+                        <div class="price-big">â‚¹3 - â‚¹4</div>
+                        <p class="per-call">per call executed</p>
+                        <p>Professional cold calling and direct outreach to potential clients.</p>
+                        <br>
                         <a href="#contact" class="btn-card">Start Calling</a>
                     </div>
                 </div>
@@ -125,7 +355,7 @@
 
     <section id="contact" class="footer-section">
         <div class="container">
-            <h2 class="section-title white">Get In Touch</h2>
+            <h2 class="section-title" style="color:white">Get In Touch</h2>
             <div class="contact-grid">
                 
                 <div class="contact-box">
