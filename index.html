@@ -58,17 +58,28 @@
         .orb-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, var(--neon-cyan), transparent); animation-delay: -5s; }
         @keyframes floatOrb { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 30px); } }
 
-        /* --- 3. SYSTEM BOOT INTRO (FIXED VISIBILITY) --- */
+        /* --- 3. REFINED INTRO ANIMATION --- */
         #intro-layer {
-            position: fixed; inset: 0; background: var(--bg-deep); z-index: 9999;
+            position: fixed; inset: 0; 
+            background-color: var(--bg-deep); /* Ensure solid background to prevent blank screen */
+            z-index: 9999;
             display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+            opacity: 1; visibility: visible;
+        }
+
+        #intro-layer.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
 
         .m-logo-wrapper {
             position: relative;
             width: clamp(80px, 20vw, 140px); height: clamp(80px, 20vw, 140px);
             display: flex; justify-content: center; align-items: center;
+            margin-bottom: 5px; /* Tighten gap so text feels connected */
+            z-index: 2;
         }
 
         .m-logo-intro {
@@ -78,43 +89,50 @@
             width: 100%; height: 100%;
             display: flex; justify-content: center; align-items: center;
             clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
-            position: relative; z-index: 2;
             box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-            /* ANIMATION: Starts immediately, fast entry */
-            animation: scaleIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            opacity: 0; /* Ensures it starts clean then fades in quickly */
+            
+            /* CRITICAL FIX: animation-fill-mode: both prevents blank state before animation starts */
+            opacity: 0; transform: scale(0.5);
+            animation: logoPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; 
+            will-change: transform, opacity;
         }
-
-        .scan-line {
-            position: absolute; top: 0; left: 0; width: 100%; height: 5px;
-            background: var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
-            z-index: 3; animation: scan 2s ease-in-out infinite; opacity: 0.7;
-        }
-        @keyframes scan { 0% { top: 0%; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 
         .intro-text-mask {
-            overflow: hidden; margin-top: 20px;
+            overflow: hidden; 
             height: clamp(40px, 10vw, 80px);
             display: flex; align-items: center; justify-content: center;
+            position: relative;
+            z-index: 1; /* Behind logo wrapper visually if they overlapped */
         }
+        
         .intro-text {
             font-family: 'Orbitron', sans-serif; font-weight: 700;
             font-size: clamp(1.2rem, 5vw, 2.5rem); color: var(--text-main);
-            letter-spacing: 2px; text-transform: uppercase;
-            transform: translateY(100%);
-            /* ANIMATION: Follows logo after 0.8s */
-            animation: textUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.8s;
+            letter-spacing: 3px; text-transform: uppercase;
             text-align: center;
+            line-height: 1;
+
+            /* CRITICAL FIX: animation-fill-mode: both */
+            opacity: 0; transform: translateY(120%);
+            animation: textGen 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation-delay: 0.4s; /* Starts while logo is bouncing */
+            will-change: transform, opacity;
         }
         .intro-text span { color: var(--neon-gold); }
 
-        @keyframes scaleIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes textUp { to { transform: translateY(0); } }
+        @keyframes logoPop { 
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); } 
+        }
+        @keyframes textGen { 
+            0% { opacity: 0; transform: translateY(120%); }
+            100% { opacity: 1; transform: translateY(0); } 
+        }
 
         /* --- 4. MAIN LAYOUT --- */
-        #main-content { opacity: 0; filter: blur(10px); transition: 1.5s ease; }
-        #main-content.active { opacity: 1; filter: blur(0); }
+        #main-content { 
+            opacity: 1; 
+        }
 
         nav {
             position: fixed; top: 0; width: 100%; z-index: 100; padding: 15px 0;
@@ -238,7 +256,7 @@
         .role { color: var(--neon-cyan); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; font-family: 'Orbitron', sans-serif;}
         .desc { font-size: 1rem; color: var(--text-muted); line-height: 1.7; }
 
-        /* Packages */
+        /* Packages (Unified Blue) */
         .pkg-title { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--text-main); margin-bottom: 25px; letter-spacing: 1px; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
         th { text-transform: uppercase; font-size: 0.75rem; color: var(--neon-cyan); padding: 12px; border-bottom: 1px solid var(--glass-border); letter-spacing: 1px; font-family: 'Orbitron', sans-serif; }
@@ -256,7 +274,7 @@
         .btn-full:hover { background: var(--neon-cyan); color: var(--bg-deep); box-shadow: 0 0 30px rgba(0, 243, 255, 0.4); }
 
         /* --- 6. AI GENERATOR SECTIONS (Unified Purple) --- */
-        #ai-lab { padding: 100px 20px; text-align: center; }
+        #ai-lab, #ai-caption { padding: 100px 20px; text-align: center; }
         .ai-wrapper {
             max-width: 800px; margin: 0 auto;
             background: linear-gradient(180deg, rgba(15, 20, 30, 0.8) 0%, rgba(5, 5, 10, 0.9) 100%);
@@ -320,7 +338,7 @@
     <!-- INTRO -->
     <div id="intro-layer">
         <div class="m-logo-wrapper">
-            <div class="m-logo-intro">M<div class="scan-line"></div></div>
+            <div class="m-logo-intro">M</div>
         </div>
         <div class="intro-text-mask">
             <div class="intro-text">ADCAP <span>MARKETING</span></div>
@@ -385,7 +403,7 @@
                         <div class="big-price">₹3 - ₹4</div>
                         <p class="role" style="opacity:0.8; color:var(--neon-cyan)">PER CALL EXECUTED</p>
                         <br>
-                        <a href="#contact" class="btn-full">Select Package</a>
+                        <a href="#contact" class="btn-full" style="background:var(--neon-cyan); color:var(--bg-deep); border-color:var(--neon-cyan)">Select Package</a>
                     </div>
                 </div>
             </div>
@@ -397,11 +415,11 @@
                 <h2 style="color:var(--neon-purple)">Viral Hook Generator ✨</h2>
                 <div class="bar" style="background:var(--neon-purple); box-shadow:0 0 15px var(--neon-purple)"></div>
             </div>
-            <div class="ai-wrapper">
-                <input type="text" id="nicheInput" class="ai-input" placeholder="Enter your Niche (e.g. Fitness, Real Estate)...">
-                <button onclick="generateHooks()" id="genBtn" class="btn-ai">Generate Viral Hooks</button>
+            <div class="ai-wrapper" style="border-color: var(--neon-purple);">
+                <input type="text" id="nicheInput" class="ai-input" placeholder="Enter your Niche (e.g. Fitness, Real Estate)..." style="border-color: var(--glass-border);">
+                <button onclick="generateHooks()" id="genBtn" class="btn-ai" style="background: var(--neon-purple);">Generate Viral Hooks</button>
                 <div id="loader" class="loading-text"><br>INITIALIZING GEMINI AI PROTOCOL...</div>
-                <div id="aiResult" class="ai-result"></div>
+                <div id="aiResult" class="ai-result" style="border-left-color: var(--neon-purple); color: var(--neon-purple);"></div>
             </div>
         </section>
 
@@ -411,11 +429,11 @@
                 <h2 style="color:var(--neon-purple)">Magic Caption Polisher ✍️</h2>
                 <div class="bar" style="background:var(--neon-purple); box-shadow:0 0 15px var(--neon-purple)"></div>
             </div>
-            <div class="ai-wrapper">
-                <textarea id="captionInput" class="ai-input" placeholder="Paste your draft caption here..." style="min-height: 100px; resize: vertical;"></textarea>
-                <button onclick="generateCaption()" id="captionBtn" class="btn-ai">Polish Caption</button>
+            <div class="ai-wrapper" style="border-color: var(--neon-purple);">
+                <textarea id="captionInput" class="ai-input" placeholder="Paste your draft caption here..." style="min-height: 100px; resize: vertical; border-color: var(--glass-border);"></textarea>
+                <button onclick="generateCaption()" id="captionBtn" class="btn-ai" style="background: var(--neon-purple);">Polish Caption</button>
                 <div id="loaderCaption" class="loading-text"><br>OPTIMIZING ENGAGEMENT...</div>
-                <div id="captionResult" class="ai-result"></div>
+                <div id="captionResult" class="ai-result" style="border-left-color: var(--neon-purple); color: var(--neon-purple);"></div>
             </div>
         </section>
 
@@ -474,17 +492,15 @@
             const intro = document.getElementById('intro-layer');
             const main = document.getElementById('main-content');
             
-            // 4.5 Seconds Total (1.5s visible animation + 3s hold)
+            // Wait 2.2s for sequence to complete naturally
             setTimeout(() => {
-                intro.style.transform = 'translateY(-100%)';
+                // Fade out neatly
+                intro.classList.add('hidden'); 
                 
-                // Show Main Content
-                setTimeout(() => {
-                    main.classList.add('active');
-                    document.body.style.overflow = 'auto';
-                    scrambleText();
-                }, 500); 
-            }, 4500); 
+                // Unlock Scroll
+                document.body.style.overflow = 'auto';
+                scrambleText();
+            }, 2200); 
         };
 
         // 2. SCROLL REVEAL ANIMATION
@@ -536,8 +552,8 @@
             });
         }
 
-        // 5. GEMINI AI INTEGRATION (COMMON API KEY)
-        const apiKey = ""; // API Key handled by environment
+        // 5. GEMINI AI INTEGRATION
+        const apiKey = ""; 
 
         async function callGemini(prompt, loaderId, resultId, btnId, btnText) {
             const btn = document.getElementById(btnId);
@@ -557,12 +573,17 @@
                 });
 
                 const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error.message);
+                }
+
                 const text = data.candidates[0].content.parts[0].text;
                 
                 resultBox.innerText = text;
                 resultBox.style.display = "block";
             } catch (error) {
-                resultBox.innerText = "System Error: Neural Link Failed. Try again.";
+                resultBox.innerText = "Error: " + error.message;
                 resultBox.style.display = "block";
                 console.error(error);
             } finally {
