@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<!-- Updated: 2026-02-01 - Merged CSS and JS into single file -->
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madcap Marketing | Packages</title>
+    <title>Madcap Marketing | Future of Brand</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Poppins:wght@400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy: #0e2a47;
-            /* Based on Logo */
-            --gold: #f0a500;
-            /* Based on Poster Header */
-            --gold-dark: #cfaa04;
-            --white: #ffffff;
-            --light: #f4f7f6;
-            --text: #333;
+            /* Futuristic Monochromatic Blue Palette */
+            --bg-dark: #020b16;
+            --bg-panel: rgba(10, 25, 47, 0.7);
+            
+            /* Primary Neon Colors */
+            --neon-cyan: #00f3ff;
+            --electric-blue: #2d6cdf;
+            --bright-white: #ffffff;
+            
+            --text-main: #e6f1ff;
+            --text-muted: #94a3b8;
+            
+            /* Effects */
+            --glass-border: rgba(0, 243, 255, 0.3);
+            --card-glow: 0 0 20px rgba(0, 243, 255, 0.15);
+            --btn-gradient: linear-gradient(90deg, var(--electric-blue), var(--neon-cyan));
         }
 
         * {
@@ -29,11 +34,20 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light);
-            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-dark);
+            /* Updated background: purely blue/cyan ecosystem */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(45, 108, 223, 0.15) 0%, transparent 30%);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -42,11 +56,12 @@
             padding: 0 20px;
         }
 
-        /* Navbar */
+        /* --- Navbar --- */
         nav {
-            background: var(--white);
+            background: rgba(2, 11, 22, 0.9);
+            backdrop-filter: blur(12px);
             padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -61,252 +76,416 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            color: var(--navy);
+            color: var(--text-main);
             font-size: 1.2rem;
+            letter-spacing: 1px;
         }
 
-        .logo img {
-            height: 50px;
-            width: auto;
+        .logo-symbol {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 243, 255, 0.05);
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+            border-radius: 4px;
+            text-shadow: 0 0 5px var(--neon-cyan);
         }
 
         .btn-nav {
-            background: var(--navy);
-            color: var(--white);
-            padding: 8px 20px;
+            background: transparent;
+            color: var(--neon-cyan);
+            padding: 8px 25px;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: 500;
+            border: 1px solid var(--neon-cyan);
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
-        /* Hero */
+        .btn-nav:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        /* --- Hero Section --- */
         .hero {
-            background: linear-gradient(135deg, var(--navy) 0%, #163b61 100%);
-            color: var(--white);
+            position: relative;
+            padding: 120px 20px;
             text-align: center;
-            padding: 80px 20px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.07) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.4;
+            transform: perspective(800px) rotateX(60deg);
+            transform-origin: center top;
+            z-index: -1;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
         }
 
         .hero h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
         }
 
         .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn-main {
-            background: var(--gold);
-            color: var(--navy);
-            padding: 12px 30px;
-            border-radius: 50px;
+            background: var(--btn-gradient);
+            color: var(--bg-dark);
+            padding: 16px 45px;
+            border-radius: 4px;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 2px;
             transition: 0.3s;
+            position: relative;
+            display: inline-block;
+            border: none;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
 
         .btn-main:hover {
-            background: #ffbe2e;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.6);
+            color: #000;
         }
 
-        /* Packages */
-        #packages {
-            padding: 60px 0;
-        }
-
+        /* --- Section Styling --- */
         .section-title {
             text-align: center;
             font-family: 'Montserrat', sans-serif;
-            font-size: 2rem;
-            color: var(--navy);
-            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: var(--bright-white);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            letter-spacing: 2px;
         }
 
-        .section-title.white {
-            color: var(--white);
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--electric-blue);
+            margin: 15px auto 0;
+            box-shadow: 0 0 15px var(--electric-blue);
         }
+
+        /* --- Packages --- */
+        #packages { padding: 60px 0; }
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
         }
 
         .card {
-            background: var(--white);
-            border-radius: 15px;
+            background: linear-gradient(180deg, rgba(10, 25, 47, 0.8) 0%, rgba(2, 11, 22, 0.9) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            border: 1px solid #eee;
-            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.15);
+        }
+
+        /* Glowing top border */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            opacity: 0.7;
         }
 
         .card-header {
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
-            color: var(--white);
-        }
-
-        .blue-header {
-            background: var(--navy);
-            border-bottom: 4px solid var(--gold);
-        }
-
-        .gold-header {
-            background: var(--gold);
-            color: var(--navy);
+            background: rgba(0, 243, 255, 0.03);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
         }
 
         .card-header h3 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
+            font-size: 1.6rem;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
 
         .card-header p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            font-weight: 400;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
         }
 
-        /* Tables within cards */
-        .table-wrapper {
-            padding: 0;
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
+        /* Tables */
+        table { width: 100%; border-collapse: separate; border-spacing: 0 10px; text-align: center; }
+        
         th {
-            background: #f8f9fa;
-            padding: 12px;
+            padding: 10px;
             font-size: 0.85rem;
-            color: var(--navy);
+            color: var(--electric-blue);
             text-transform: uppercase;
+            letter-spacing: 1.5px;
             font-weight: 700;
         }
 
         td {
-            padding: 15px 10px;
-            border-bottom: 1px solid #eee;
-            font-size: 0.95rem;
+            padding: 12px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            font-size: 1.1rem;
+            font-weight: 500;
         }
+        
+        /* Rounded corners for table rows */
+        tr td:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+        tr td:last-child { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
+        td:not(:first-child) { color: var(--bright-white); font-weight: 600; }
 
         /* Outreach Card Body */
-        .card-body {
-            padding: 30px;
+        .outreach-body {
             text-align: center;
+            padding: 20px 0;
         }
-
+        
         .price-big {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--navy);
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--bright-white);
+            text-shadow: 0 0 20px rgba(45, 108, 223, 0.6);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1;
+            margin-bottom: 5px;
         }
-
-        .per-call {
-            color: #777;
-            margin-bottom: 20px;
-        }
-
-        .desc {
-            margin-bottom: 25px;
-            font-size: 0.95rem;
+        
+        .per-call { color: var(--electric-blue); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; font-size: 0.9rem; }
+        .desc { margin-bottom: 20px; color: var(--text-muted); font-size: 1rem; }
+        
+        /* Select Plan Button Wrapper */
+        .card-action {
+            padding: 0 25px 30px 25px;
+            margin-top: auto;
         }
 
         .btn-card {
             display: block;
             width: 100%;
-            padding: 10px;
-            background: var(--navy);
-            color: var(--white);
+            padding: 14px;
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            text-align: center;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Contact Footer */
-        .footer-section {
-            background: var(--navy);
-            padding: 60px 0 20px;
-            color: var(--white);
+        .btn-card:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
+        }
+
+        /* --- The Visionaries Section --- */
+        #visionaries {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .visionary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .visionary-card {
+            background: linear-gradient(145deg, rgba(10,25,47,0.6), rgba(2,11,22,0.8));
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            padding: 50px 30px;
             text-align: center;
+            border-radius: 15px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        /* Blue Accent Line */
+        .visionary-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--electric-blue));
+            box-shadow: 0 0 15px var(--electric-blue);
+        }
+
+        .visionary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border-color: var(--electric-blue);
+        }
+
+        .visionary-role {
+            font-family: 'Montserrat', sans-serif; /* Changed to bolder font */
+            color: var(--electric-blue);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            font-weight: 800; /* Extra bold */
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(45, 108, 223, 0.4); /* Added glow for emphasis */
+        }
+
+        .visionary-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--bright-white);
+            margin-bottom: 5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .visionary-title {
+            color: var(--neon-cyan);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        .visionary-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 20px;
+            font-style: italic;
+        }
+
+        /* --- Footer --- */
+        .footer-section {
+            background: #01060d;
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(0, 243, 255, 0.1);
         }
 
         .contact-grid {
             display: flex;
             justify-content: center;
-            gap: 50px;
+            gap: 60px;
             flex-wrap: wrap;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .contact-box h3 {
-            color: var(--gold);
-            margin-bottom: 15px;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
             font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
         }
 
         .contact-box a {
             display: block;
-            color: var(--white);
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 1.1rem;
-            margin-bottom: 8px;
-            opacity: 0.9;
+            margin-bottom: 12px;
+            transition: 0.3s;
         }
 
         .contact-box a:hover {
-            color: var(--gold);
-            opacity: 1;
+            color: var(--bright-white);
+            padding-left: 5px;
+            text-shadow: 0 0 10px var(--neon-cyan);
         }
 
         .copyright {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 30px;
             font-size: 0.8rem;
-            opacity: 0.6;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 1px;
         }
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .nav-flex {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
-
-        /* Intro Overlay */
+        /* --- Intro Overlay --- */
         #intro-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--navy);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-dark);
             z-index: 9999;
             display: flex;
             justify-content: center;
@@ -316,15 +495,17 @@
 
         .intro-text {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
+            font-size: clamp(2rem, 6vw, 4rem); 
             font-weight: 800;
-            color: var(--white);
+            color: var(--text-main);
             display: flex;
             align-items: center;
+            white-space: nowrap; 
         }
 
         .brand-m {
-            color: var(--gold);
+            color: var(--neon-cyan);
+            text-shadow: 0 0 25px var(--neon-cyan);
         }
 
         .brand-rest {
@@ -333,17 +514,36 @@
             white-space: nowrap;
             width: 0;
             opacity: 0;
-            transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease-in;
+            transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-in;
+            background: linear-gradient(to right, var(--text-main), var(--text-muted));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-flex { flex-direction: column; gap: 20px; }
+            .section-title { font-size: 1.8rem; }
+            .price-big { font-size: 2.8rem; }
+            .card-header h3 { font-size: 1.4rem; }
         }
     </style>
 </head>
 
 <body>
 
+    <div id="intro-overlay">
+        <div class="intro-text">
+            <span class="brand-m">M</span><span class="brand-rest">adcap Marketing</span>
+        </div>
+    </div>
+
     <nav>
         <div class="container nav-flex">
             <div class="logo">
-                <img src="logo.jpg" alt="Madcap Marketing Logo">
+                <div class="logo-symbol">M</div>
                 <span>MADCAP MARKETING</span>
             </div>
             <a href="#contact" class="btn-nav">Contact Us</a>
@@ -353,7 +553,7 @@
     <header class="hero">
         <div class="container">
             <h1>Amplify Your Brand</h1>
-            <p>From viral Reels to AI-driven content and direct outreach, we deliver results that craze.</p>
+            <p>From viral Reels to AI-driven content and direct outreach, we deliver results that craze. Future-proof your marketing today.</p>
             <a href="#packages" class="btn-main">View Packages</a>
         </div>
     </header>
@@ -364,12 +564,13 @@
 
             <div class="pricing-grid">
 
+                <!-- Reels Package -->
                 <div class="card">
-                    <div class="card-header blue-header">
-                        <h3>The Creator Package</h3>
-                        <p>(Reels)</p>
+                    <div class="card-header">
+                        <h3>The Creator</h3>
+                        <p>High-Impact Reels</p>
                     </div>
-                    <div class="table-wrapper">
+                    <div class="card-content">
                         <table>
                             <thead>
                                 <tr>
@@ -397,14 +598,18 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-action">
+                        <a href="#contact" class="btn-card">Select Plan</a>
+                    </div>
                 </div>
 
+                <!-- AI Package -->
                 <div class="card">
-                    <div class="card-header blue-header">
-                        <h3>The Futurist Package</h3>
-                        <p>(AI Reels)</p>
+                    <div class="card-header">
+                        <h3>The Futurist</h3>
+                        <p>AI-Driven Content</p>
                     </div>
-                    <div class="table-wrapper">
+                    <div class="card-content">
                         <table>
                             <thead>
                                 <tr>
@@ -432,19 +637,54 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-action">
+                        <a href="#contact" class="btn-card">Select Plan</a>
+                    </div>
                 </div>
 
+                <!-- Calling Package -->
                 <div class="card">
-                    <div class="card-header gold-header">
-                        <h3>The Outreach Package</h3>
-                        <p>(Calling)</p>
+                    <div class="card-header">
+                        <h3>The Outreach</h3>
+                        <p>Direct Calling</p>
                     </div>
-                    <div class="card-body">
-                        <div class="price-big">₹3 to ₹4</div>
+                    <div class="card-content outreach-body">
+                        <div class="price-big">₹3 - ₹4</div>
                         <p class="per-call">per call</p>
-                        <hr>
-                        <p class="desc">Professional cold calling and direct outreach to potential clients.</p>
-                        <a href="#contact" class="btn-card">Start Calling</a>
+                        <p class="desc">Professional cold calling and direct outreach to potential clients. Scale your leads instantly.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#contact" class="btn-card">Select Plan</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="visionaries">
+        <div class="container">
+            <h2 class="section-title">The Visionaries</h2>
+            
+            <div class="visionary-grid">
+                
+                <!-- Shivv -->
+                <div class="visionary-card">
+                    <div class="visionary-role">Founder</div>
+                    <div class="visionary-name">Shivv</div>
+                    <div class="visionary-title">Mastermind & Strategist</div>
+                    <div class="visionary-desc">
+                        "Architect of viral campaigns and chaotic brilliance. He sees the trends before they happen and engineers the craze."
+                    </div>
+                </div>
+
+                <!-- Uday -->
+                <div class="visionary-card">
+                    <div class="visionary-role">Founder</div>
+                    <div class="visionary-name">Uday</div>
+                    <div class="visionary-title">Tech Genius</div>
+                    <div class="visionary-desc">
+                        "Building the digital infrastructure of tomorrow. He merges logic with art to create seamless, high-performance systems."
                     </div>
                 </div>
 
@@ -454,54 +694,43 @@
 
     <section id="contact" class="footer-section">
         <div class="container">
-            <h2 class="section-title white">Get In Touch</h2>
+            <h2 class="section-title" style="margin-bottom: 40px; font-size: 2rem;">Initiate Protocol</h2>
             <div class="contact-grid">
 
                 <div class="contact-box">
-                    <h3>Call Us</h3>
+                    <h3>Secure Line</h3>
                     <a href="tel:+918446131404">+91 84461 31404</a>
                     <a href="tel:+918668460482">+91 86684 60482</a>
                 </div>
 
                 <div class="contact-box">
-                    <h3>Email Us</h3>
+                    <h3>Digital Uplink</h3>
                     <a href="mailto:shivnathkamble23@gmail.com">shivnathkamble23@gmail.com</a>
                     <a href="mailto:udaykumbhar618@gmail.com">udaykumbhar618@gmail.com</a>
                 </div>
             </div>
             <div class="copyright">
-                &copy; 2026 Madcap Marketing. All rights reserved.
+                &copy; 2026 Madcap Marketing. All Systems Operational.
             </div>
         </div>
     </section>
-
-    <div id="intro-overlay">
-        <div class="intro-text">
-            <span class="brand-m">M</span><span class="brand-rest">adcap Marketing</span>
-        </div>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const brandRest = document.querySelector('.brand-rest');
             const overlay = document.getElementById('intro-overlay');
 
-            // Wait a brief moment before starting the text reveal
             setTimeout(() => {
                 brandRest.style.width = brandRest.scrollWidth + 'px';
                 brandRest.style.opacity = '1';
             }, 500);
 
-            // After text animation finishes, fade out overlay
-            // Text animation takes 1.5s approx, plus 500ms delay = 2s
             setTimeout(() => {
                 overlay.style.opacity = '0';
-
-                // Remove from DOM after transition
                 setTimeout(() => {
                     overlay.style.display = 'none';
-                }, 800); // 0.8s transition time for overlay fade
-            }, 2500);
+                }, 800); 
+            }, 2200);
         });
     </script>
 </body>
