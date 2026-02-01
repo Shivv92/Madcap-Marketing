@@ -58,11 +58,9 @@
         .orb-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, var(--neon-cyan), transparent); animation-delay: -5s; }
         @keyframes floatOrb { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 30px); } }
 
-        /* --- 3. REFINED INTRO ANIMATION --- */
+        /* --- 3. SYSTEM BOOT INTRO (INSTANT START) --- */
         #intro-layer {
-            position: fixed; inset: 0; 
-            background-color: var(--bg-deep); /* Ensure solid background to prevent blank screen */
-            z-index: 9999;
+            position: fixed; inset: 0; background: var(--bg-deep); z-index: 99999;
             display: flex; justify-content: center; align-items: center; flex-direction: column;
             transition: opacity 0.8s ease-in-out, visibility 0.8s;
             opacity: 1; visibility: visible;
@@ -78,8 +76,7 @@
             position: relative;
             width: clamp(80px, 20vw, 140px); height: clamp(80px, 20vw, 140px);
             display: flex; justify-content: center; align-items: center;
-            margin-bottom: 5px; /* Tighten gap so text feels connected */
-            z-index: 2;
+            margin-bottom: 20px;
         }
 
         .m-logo-intro {
@@ -91,47 +88,43 @@
             clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
             box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
             
-            /* CRITICAL FIX: animation-fill-mode: both prevents blank state before animation starts */
-            opacity: 0; transform: scale(0.5);
-            animation: logoPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; 
-            will-change: transform, opacity;
+            /* INSTANT POP - No Delay */
+            transform: scale(0);
+            animation: logoPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         .intro-text-mask {
             overflow: hidden; 
             height: clamp(40px, 10vw, 80px);
             display: flex; align-items: center; justify-content: center;
-            position: relative;
-            z-index: 1; /* Behind logo wrapper visually if they overlapped */
         }
         
         .intro-text {
             font-family: 'Orbitron', sans-serif; font-weight: 700;
             font-size: clamp(1.2rem, 5vw, 2.5rem); color: var(--text-main);
             letter-spacing: 3px; text-transform: uppercase;
-            text-align: center;
-            line-height: 1;
-
-            /* CRITICAL FIX: animation-fill-mode: both */
-            opacity: 0; transform: translateY(120%);
-            animation: textGen 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-            animation-delay: 0.4s; /* Starts while logo is bouncing */
-            will-change: transform, opacity;
+            text-align: center; line-height: 1;
+            
+            /* SLIDES UP AFTER LOGO */
+            transform: translateY(100%);
+            animation: textGen 0.6s ease-out forwards 0.5s;
         }
         .intro-text span { color: var(--neon-gold); }
 
         @keyframes logoPop { 
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1); } 
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; } 
         }
         @keyframes textGen { 
-            0% { opacity: 0; transform: translateY(120%); }
-            100% { opacity: 1; transform: translateY(0); } 
+            0% { transform: translateY(100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; } 
         }
 
         /* --- 4. MAIN LAYOUT --- */
         #main-content { 
+            /* Visible immediately behind intro */
             opacity: 1; 
+            filter: blur(0); 
         }
 
         nav {
@@ -273,47 +266,6 @@
         }
         .btn-full:hover { background: var(--neon-cyan); color: var(--bg-deep); box-shadow: 0 0 30px rgba(0, 243, 255, 0.4); }
 
-        /* --- 6. AI GENERATOR SECTIONS (Unified Purple) --- */
-        #ai-lab, #ai-caption { padding: 100px 20px; text-align: center; }
-        .ai-wrapper {
-            max-width: 800px; margin: 0 auto;
-            background: linear-gradient(180deg, rgba(15, 20, 30, 0.8) 0%, rgba(5, 5, 10, 0.9) 100%);
-            border: 1px solid var(--neon-purple); border-radius: 10px;
-            padding: 40px; position: relative; backdrop-filter: blur(10px);
-        }
-        .ai-wrapper::before {
-            content: "AI // SYSTEM"; position: absolute; top: -10px; left: 20px;
-            background: var(--bg-deep); color: var(--neon-purple); padding: 0 10px;
-            font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 2px;
-        }
-        
-        .ai-input {
-            width: 100%; padding: 15px; background: rgba(0,0,0,0.5);
-            border: 1px solid var(--glass-border); color: var(--text-main);
-            font-family: 'Rajdhani', sans-serif; font-size: 1.2rem;
-            margin-bottom: 20px; border-radius: 5px; outline: none;
-            transition: 0.3s;
-        }
-        .ai-input:focus { border-color: var(--neon-purple); box-shadow: 0 0 15px rgba(188, 19, 254, 0.2); }
-        
-        .btn-ai {
-            padding: 15px 40px; color: white; background: var(--neon-purple);
-            border: none; font-family: 'Orbitron', sans-serif; font-weight: 700;
-            text-transform: uppercase; cursor: pointer; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-            transition: 0.3s; width: 100%;
-        }
-        .btn-ai:hover { box-shadow: 0 0 30px rgba(188, 19, 254, 0.5); }
-        .btn-ai:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .ai-result {
-            margin-top: 30px; text-align: left; min-height: 50px;
-            border-left: 2px solid var(--neon-purple); padding-left: 20px;
-            color: var(--neon-purple); display: none; white-space: pre-line;
-            line-height: 1.6;
-        }
-        .loading-text { color: var(--neon-purple); font-family: 'Orbitron', sans-serif; animation: blink 1s infinite; display: none;}
-        @keyframes blink { 50% { opacity: 0.5; } }
-
         /* Footer */
         .footer { background: #020406; text-align: center; padding: 100px 20px; border-top: 1px solid var(--glass-border); position: relative; z-index: 10; }
         .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; margin-top: 50px; }
@@ -360,7 +312,6 @@
             
             <div class="btn-group">
                 <a href="#packages" class="glow-btn cyan">View Packages</a>
-                <a href="#ai-lab" class="glow-btn">Try Our AI</a>
             </div>
         </section>
 
@@ -406,34 +357,6 @@
                         <a href="#contact" class="btn-full" style="background:var(--neon-cyan); color:var(--bg-deep); border-color:var(--neon-cyan)">Select Package</a>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- AI LAB: Viral Hooks (Purple) -->
-        <section id="ai-lab" class="reveal">
-            <div class="section-head">
-                <h2 style="color:var(--neon-purple)">Viral Hook Generator ✨</h2>
-                <div class="bar" style="background:var(--neon-purple); box-shadow:0 0 15px var(--neon-purple)"></div>
-            </div>
-            <div class="ai-wrapper" style="border-color: var(--neon-purple);">
-                <input type="text" id="nicheInput" class="ai-input" placeholder="Enter your Niche (e.g. Fitness, Real Estate)..." style="border-color: var(--glass-border);">
-                <button onclick="generateHooks()" id="genBtn" class="btn-ai" style="background: var(--neon-purple);">Generate Viral Hooks</button>
-                <div id="loader" class="loading-text"><br>INITIALIZING GEMINI AI PROTOCOL...</div>
-                <div id="aiResult" class="ai-result" style="border-left-color: var(--neon-purple); color: var(--neon-purple);"></div>
-            </div>
-        </section>
-
-        <!-- AI CAPTION: Magic Caption (Purple) -->
-        <section id="ai-caption" class="reveal">
-            <div class="section-head">
-                <h2 style="color:var(--neon-purple)">Magic Caption Polisher ✍️</h2>
-                <div class="bar" style="background:var(--neon-purple); box-shadow:0 0 15px var(--neon-purple)"></div>
-            </div>
-            <div class="ai-wrapper" style="border-color: var(--neon-purple);">
-                <textarea id="captionInput" class="ai-input" placeholder="Paste your draft caption here..." style="min-height: 100px; resize: vertical; border-color: var(--glass-border);"></textarea>
-                <button onclick="generateCaption()" id="captionBtn" class="btn-ai" style="background: var(--neon-purple);">Polish Caption</button>
-                <div id="loaderCaption" class="loading-text"><br>OPTIMIZING ENGAGEMENT...</div>
-                <div id="captionResult" class="ai-result" style="border-left-color: var(--neon-purple); color: var(--neon-purple);"></div>
             </div>
         </section>
 
@@ -485,23 +408,24 @@
     </div>
 
     <script>
-        // 1. INTRO
+        // 1. INTRO - Optimized for Speed
         document.body.style.overflow = 'hidden';
         
-        window.onload = () => {
+        // Wait for DOM ready instead of full window load to prevent blank screen
+        document.addEventListener("DOMContentLoaded", () => {
             const intro = document.getElementById('intro-layer');
             const main = document.getElementById('main-content');
             
-            // Wait 2.2s for sequence to complete naturally
+            // Wait 2.5s for sequence
             setTimeout(() => {
                 // Fade out neatly
                 intro.classList.add('hidden'); 
                 
-                // Unlock Scroll
+                // Unlock Scrolling
                 document.body.style.overflow = 'auto';
                 scrambleText();
-            }, 2200); 
-        };
+            }, 2500); 
+        });
 
         // 2. SCROLL REVEAL ANIMATION
         window.addEventListener('scroll', () => {
@@ -550,61 +474,6 @@
                     card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
                 });
             });
-        }
-
-        // 5. GEMINI AI INTEGRATION
-        const apiKey = ""; 
-
-        async function callGemini(prompt, loaderId, resultId, btnId, btnText) {
-            const btn = document.getElementById(btnId);
-            const loader = document.getElementById(loaderId);
-            const resultBox = document.getElementById(resultId);
-
-            btn.disabled = true;
-            btn.innerText = "Processing...";
-            loader.style.display = "block";
-            resultBox.style.display = "none";
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
-
-                const data = await response.json();
-                
-                if (data.error) {
-                    throw new Error(data.error.message);
-                }
-
-                const text = data.candidates[0].content.parts[0].text;
-                
-                resultBox.innerText = text;
-                resultBox.style.display = "block";
-            } catch (error) {
-                resultBox.innerText = "Error: " + error.message;
-                resultBox.style.display = "block";
-                console.error(error);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = btnText;
-                loader.style.display = "none";
-            }
-        }
-
-        function generateHooks() {
-            const input = document.getElementById('nicheInput').value;
-            if(!input) return alert("Please enter a niche!");
-            const prompt = `Act as a viral marketing expert. Generate 3 short, punchy, high-retention video hooks for the niche: "${input}". Format: 1. [Hook] ...`;
-            callGemini(prompt, 'loader', 'aiResult', 'genBtn', 'Generate Viral Hooks');
-        }
-
-        function generateCaption() {
-            const input = document.getElementById('captionInput').value;
-            if(!input) return alert("Please enter a caption!");
-            const prompt = `Rewrite this social media caption to be highly engaging, use line breaks, include emojis, and 3-5 trending hashtags. Original: "${input}"`;
-            callGemini(prompt, 'loaderCaption', 'captionResult', 'captionBtn', 'Polish Caption');
         }
     </script>
 </body>
