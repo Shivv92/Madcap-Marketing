@@ -3,341 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madcap Marketing | Cinematic Experience</title>
+    <title>Madcap Marketing | The Visionaries</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --navy: #0e2a47;
-            --navy-deep: #051626;
-            --gold: #f0a500;
-            --gold-glow: #ffd700;
-            --white: #ffffff;
-            --light: #f4f7f6;
+            --navy: #0A192F;
+            --navy-light: #112240;
+            --gold: #64FFDA; /* Using a modern Neon Cyan/Gold mix for 'Cyber' look, or switch to Classic Gold */
+            --gold-real: #FFD700;
+            --text-gray: #8892b0;
+            --white: #e6f1ff;
         }
 
+        /* RESET & BASE */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--light);
-            color: #333;
-            overflow-x: hidden; 
-            /* Scrollbar hidden initially via JS */
+            background-color: var(--navy);
+            color: var(--text-gray);
+            overflow-x: hidden;
         }
 
-        /* --- 1. HOLLYWOOD INTRO LOADER --- */
+        /* --- 1. CINEMATIC INTRO SEQUENCE --- */
         #intro-layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, var(--navy) 0%, #000 100%);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); /* Smooth Physics */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--navy);
+            z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1);
         }
 
-        .intro-content {
-            display: flex;
-            align-items: center;
+        /* The "M" Logo (CSS Only - No Image Needed) */
+        .m-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 5rem;
+            color: var(--navy);
+            background: var(--gold-real);
+            width: 120px; height: 120px;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
             position: relative;
-        }
-
-        /* Logo Pulse Effect */
-        .intro-logo {
-            height: 120px;
-            width: auto;
             z-index: 2;
-            border-radius: 50%;
-            box-shadow: 0 0 0 rgba(240, 165, 0, 0);
-            animation: pulseGlow 2s infinite;
+            animation: logoEntrance 1s ease-out forwards;
         }
 
-        @keyframes pulseGlow {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(240, 165, 0, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(240, 165, 0, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(240, 165, 0, 0); }
+        .intro-text-wrapper {
+            position: relative;
+            height: 120px;
+            display: flex; align-items: center;
+            overflow: hidden; /* Hides text until it slides out */
+            margin-left: -20px; /* Overlap slightly */
         }
 
-        /* Cinematic Text Reveal */
         .intro-text {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 3.5rem;
+            font-weight: 900;
+            font-size: 3rem;
             color: var(--white);
             white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            opacity: 0;
-            margin-left: 15px;
-            transform: translateX(-20px);
-            animation: slideText 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards 1s; /* Delays start */
+            transform: translateX(-110%); /* Start hidden behind M */
+            animation: slideName 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.2s;
+            padding-left: 40px;
         }
+        .intro-text span { color: var(--gold-real); }
 
-        .intro-text span { color: var(--gold); text-shadow: 0 0 20px rgba(240, 165, 0, 0.5); }
+        @keyframes logoEntrance { 0% { transform: scale(0) rotate(-90deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+        @keyframes slideName { to { transform: translateX(0); } }
 
-        @keyframes slideText {
-            0% { width: 0; opacity: 0; }
-            100% { width: 480px; opacity: 1; transform: translateX(0); }
-        }
+        /* --- 2. MAIN SITE CONTENT --- */
+        #main-content { opacity: 0; transition: opacity 1.5s ease; filter: blur(5px); }
+        #main-content.active { opacity: 1; filter: blur(0); }
 
-        /* --- 2. MAIN SITE --- */
-        #main-content {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: all 1s ease-out;
-            filter: blur(5px);
-        }
-        
-        #main-content.active {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
-        }
-
-        /* --- NAVBAR --- */
+        /* Navbar */
         nav {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            backdrop-filter: blur(10px);
+            padding: 20px 0; position: fixed; width: 100%; top: 0; z-index: 100;
+            background: rgba(10, 25, 47, 0.85); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        
-        .nav-logo-box { display: flex; align-items: center; gap: 10px; }
-        .nav-logo-box img { height: 50px; border-radius: 50%; transition: 0.3s; }
-        .nav-logo-box:hover img { transform: rotate(10deg); }
-        .nav-logo-box span { font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--navy); font-size: 1.2rem; }
-
-        .btn-nav {
-            background: var(--navy); color: white; padding: 10px 25px; 
-            text-decoration: none; border-radius: 50px; font-weight: 600; transition: 0.3s;
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 0 30px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .btn-nav:hover { background: var(--gold); color: var(--navy); }
+        .nav-logo {
+            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--white);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .mini-m {
+            background: var(--gold-real); color: var(--navy); padding: 0 10px; border-radius: 4px; font-size: 1.2rem;
+        }
+        .btn-contact {
+            border: 1px solid var(--gold-real); color: var(--gold-real); padding: 10px 25px;
+            border-radius: 4px; text-decoration: none; font-weight: 600; transition: 0.3s;
+        }
+        .btn-contact:hover { background: rgba(255, 215, 0, 0.1); }
 
-        /* --- HERO SECTION (Animated Background) --- */
+        /* Hero Section */
         .hero {
-            text-align: center; padding: 100px 20px;
-            background: linear-gradient(135deg, var(--navy-deep), var(--navy), #1a426b);
-            background-size: 200% 200%;
-            animation: gradientMove 10s ease infinite;
-            color: white;
-            min-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px;
+            background: radial-gradient(circle at 50% 50%, #172a45 0%, var(--navy) 100%);
         }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--white); margin-bottom: 20px; line-height: 1.1;
         }
+        .hero span { color: var(--gold-real); }
+        .hero p { max-width: 600px; font-size: 1.2rem; margin-bottom: 50px; }
         
-        .hero h1 { font-family: 'Montserrat', sans-serif; font-size: 4rem; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .hero span { color: var(--gold); }
-        .hero p { font-size: 1.3rem; margin-bottom: 40px; max-width: 600px; opacity: 0.9; }
-
-        .btn-main {
-            background: var(--gold); color: var(--navy); padding: 18px 55px;
-            border-radius: 50px; text-decoration: none; font-weight: 800;
-            font-size: 1.2rem; box-shadow: 0 10px 30px rgba(240, 165, 0, 0.4);
-            transition: all 0.3s ease;
-            position: relative; overflow: hidden;
+        .btn-hero {
+            background: transparent; border: 2px solid var(--gold-real); color: var(--gold-real);
+            padding: 18px 50px; font-size: 1.2rem; font-weight: 700; text-decoration: none;
+            border-radius: 5px; position: relative; overflow: hidden; transition: 0.3s;
         }
-        .btn-main:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(240, 165, 0, 0.6); background: var(--gold-glow); }
+        .btn-hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%;
+            background: var(--gold-real); transition: 0.3s; z-index: -1;
+        }
+        .btn-hero:hover { color: var(--navy); }
+        .btn-hero:hover::before { width: 100%; }
 
-        /* --- PACKAGES --- */
-        #packages { padding: 100px 0; }
-        .section-title { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 2.5rem; color: var(--navy); margin-bottom: 60px; text-transform: uppercase; letter-spacing: 2px; }
+        /* Founders Section (NEW) */
+        #founders { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-header h2 { font-family: 'Montserrat', sans-serif; font-size: 3rem; color: var(--white); margin-bottom: 10px; }
+        .section-header .line { width: 60px; height: 4px; background: var(--gold-real); margin: 0 auto; }
+
+        .founders-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;
+        }
+        .founder-card {
+            background: var(--navy-light); padding: 40px; border-radius: 10px;
+            text-align: center; position: relative; transition: 0.3s;
+            border: 1px solid transparent;
+        }
+        .founder-card:hover { transform: translateY(-10px); border-color: var(--gold-real); }
         
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
-
-        .card {
-            background: white; border-radius: 20px; overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            opacity: 0; transform: translateY(60px); /* Start hidden/low */
-            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-            border: 1px solid rgba(0,0,0,0.05);
+        .avatar {
+            width: 100px; height: 100px; background: var(--navy); border-radius: 50%;
+            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; border: 2px solid var(--gold-real); color: var(--gold-real);
         }
+        .founder-name { color: var(--white); font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; }
+        .founder-role { color: var(--gold-real); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        .founder-desc { font-size: 0.95rem; line-height: 1.6; }
+
+        /* Packages Section */
+        #packages { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         
-        /* Staggered Animation Class */
-        .card.visible { opacity: 1; transform: translateY(0); }
-
-        .card:hover { transform: translateY(-15px); border-color: var(--gold); box-shadow: 0 30px 60px rgba(14, 42, 71, 0.15); }
-
-        .card-header { padding: 35px; text-align: center; color: white; }
-        .blue { background: var(--navy); border-bottom: 6px solid var(--gold); }
-        .gold { background: var(--gold); color: var(--navy); }
-        .card-header h3 { font-size: 1.6rem; margin-bottom: 5px; font-weight: 800; }
-
-        table { width: 100%; text-align: center; border-collapse: collapse; }
-        td, th { padding: 18px; border-bottom: 1px solid #eee; }
-        th { background: #f9f9f9; color: var(--navy); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
-        td { font-size: 1rem; color: #555; }
-
-        .price-big { font-size: 3.5rem; font-weight: 800; color: var(--navy); text-align: center; padding: 25px 0; }
-        .btn-card { display: block; background: var(--navy); color: white; text-align: center; padding: 18px; margin: 25px; border-radius: 12px; text-decoration: none; font-weight: bold; transition: 0.3s; }
-        .btn-card:hover { background: var(--gold); color: var(--navy); }
-
-        /* --- FOOTER --- */
-        .footer { background: var(--navy); padding: 80px 0; color: white; text-align: center; }
-        .footer a { color: rgba(255,255,255,0.7); text-decoration: none; display: block; margin: 8px; font-size: 1.2rem; transition: 0.3s; }
-        .footer a:hover { color: var(--gold); transform: translateX(5px); }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .intro-text { font-size: 1.8rem; }
-            @keyframes slideText { 100% { width: 250px; opacity: 1; transform: translateX(0); } }
-            .hero h1 { font-size: 2.8rem; }
-            .hero { min-height: 70vh; }
+        .package-card {
+            background: var(--navy-light); border-radius: 10px; overflow: hidden;
+            transition: 0.3s; position: relative;
         }
+        .package-card:hover { transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        
+        .pkg-header { padding: 30px; background: #1a2f4c; text-align: center; }
+        .pkg-header h3 { color: var(--white); font-size: 1.5rem; }
+        .pkg-header.gold { background: var(--gold-real); }
+        .pkg-header.gold h3 { color: var(--navy); font-weight: 800; }
+
+        table { width: 100%; border-collapse: collapse; }
+        td, th { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        th { color: var(--gold-real); font-size: 0.8rem; text-transform: uppercase; }
+        td { color: var(--text-gray); }
+
+        .price-highlight { font-size: 2.5rem; color: var(--white); font-weight: 700; padding: 30px 0; text-align: center; }
+        .btn-pkg { display: block; text-align: center; padding: 20px; background: var(--navy); color: var(--white); text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .btn-pkg:hover { background: var(--gold-real); color: var(--navy); }
+
+        /* Contact Section */
+        .footer { text-align: center; padding: 100px 20px; background: #050f1e; }
+        .contact-links a { 
+            display: inline-block; margin: 0 20px; font-size: 1.5rem; 
+            color: var(--white); text-decoration: none; transition: 0.3s; 
+        }
+        .contact-links a:hover { color: var(--gold-real); transform: translateY(-5px); }
+        .copyright { margin-top: 50px; font-size: 0.8rem; opacity: 0.5; }
+
+        /* Scroll Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
     </style>
 </head>
 <body>
 
     <div id="intro-layer">
-        <div class="intro-content">
-            <img src="logo.jpg" class="intro-logo" alt="M Logo">
-            <div class="intro-text">ADCAP <span>MARKETING</span></div>
+        <div style="display:flex; align-items: center;">
+            <div class="m-logo">M</div>
+            <div class="intro-text-wrapper">
+                <div class="intro-text">ADCAP <span>MARKETING</span></div>
+            </div>
         </div>
     </div>
 
     <div id="main-content">
         
         <nav>
-            <div class="container nav-flex">
-                <div class="nav-logo-box">
-                    <img src="logo.jpg" alt="Logo">
-                    <span>MADCAP</span>
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <span class="mini-m">M</span> MADCAP
                 </div>
-                <a href="#contact" class="btn-nav">Contact Us</a>
+                <a href="#contact" class="btn-contact">Contact Us</a>
             </div>
         </nav>
 
-        <header class="hero">
-            <div class="container">
-                <h1>Amplify Your <span>Brand</span></h1>
-                <p>From viral Reels to AI-driven content and direct outreach, we deliver results that craze.</p>
-                <a href="#packages" class="btn-main">View Packages</a>
+        <section class="hero">
+            <h1>Amplify Your <br><span>Digital Presence</span></h1>
+            <p>We create viral moments, AI-driven content, and direct connections that scale your business.</p>
+            <a href="#packages" class="btn-hero">View Packages</a>
+        </section>
+
+        <section id="founders">
+            <div class="section-header reveal">
+                <h2>The Visionaries</h2>
+                <div class="line"></div>
             </div>
-        </header>
-
-        <section id="packages">
-            <div class="container">
-                <h2 class="section-title">Our Packages</h2>
-                <div class="pricing-grid">
-                    
-                    <div class="card js-scroll">
-                        <div class="card-header blue">
-                            <h3>The Creator</h3>
-                            <p>(Reels Production)</p>
-                        </div>
-                        <table>
-                            <tr><th>Quantity</th><th>Standard</th><th>With Collab</th></tr>
-                            <tr><td>4 Reels</td><td>&#8377;2,000</td><td>&#8377;3,000</td></tr>
-                            <tr><td>6 Reels</td><td>&#8377;2,700</td><td>&#8377;4,200</td></tr>
-                            <tr><td>8 Reels</td><td>&#8377;3,500</td><td>&#8377;5,500</td></tr>
-                        </table>
-                    </div>
-
-                    <div class="card js-scroll">
-                        <div class="card-header blue">
-                            <h3>The Futurist</h3>
-                            <p>(AI Generated)</p>
-                        </div>
-                        <table>
-                            <tr><th>Quantity</th><th>Standard</th><th>With Collab</th></tr>
-                            <tr><td>3 Reels</td><td>&#8377;900</td><td>&#8377;1,650</td></tr>
-                            <tr><td>5 Reels</td><td>&#8377;1,250</td><td>&#8377;2,500</td></tr>
-                            <tr><td>7 Reels</td><td>&#8377;1,800</td><td>&#8377;3,550</td></tr>
-                        </table>
-                    </div>
-
-                    <div class="card js-scroll">
-                        <div class="card-header gold">
-                            <h3>The Outreach</h3>
-                            <p>(Direct Calling)</p>
-                        </div>
-                        <div class="price-big">&#8377;3 - &#8377;4</div>
-                        <p style="text-align:center; color:#777; margin-bottom:20px; letter-spacing:1px; font-size:0.9rem;">PER CALL EXECUTED</p>
-                        <a href="#contact" class="btn-card">Start Calling</a>
-                    </div>
-
+            <div class="founders-grid">
+                <div class="founder-card reveal">
+                    <div class="avatar">S</div>
+                    <div class="founder-name">Shivv</div>
+                    <div class="founder-role">Founder & Strategist</div>
+                    <p class="founder-desc">The mastermind behind the viral strategies. Shivv specializes in high-impact content architecture and brand scalability.</p>
+                </div>
+                <div class="founder-card reveal">
+                    <div class="avatar">U</div>
+                    <div class="founder-name">Uday</div>
+                    <div class="founder-role">Co-Founder & Tech Lead</div>
+                    <p class="founder-desc">The technical genius. Uday leverages AI and automation to ensure your marketing runs like a well-oiled machine.</p>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="footer js-scroll">
-            <div class="container">
-                <h2 class="section-title" style="color:white">Get In Touch</h2>
-                <div style="display:flex; justify-content:center; gap:50px; flex-wrap:wrap;">
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color:var(--gold); margin-bottom:15px; font-size:1.5rem;">Call Us</h3>
-                        <a href="tel:+918446131404">+91 84461 31404</a>
-                        <a href="tel:+918668460482">+91 86684 60482</a>
-                    </div>
-                    <div>
-                        <h3 style="color:var(--gold); margin-bottom:15px; font-size:1.5rem;">Email Us</h3>
-                        <a href="mailto:shivnathkamble23@gmail.com">shivnathkamble23@gmail.com</a>
-                        <a href="mailto:udaykumbhar618@gmail.com">udaykumbhar618@gmail.com</a>
-                    </div>
-                </div>
-                <div style="margin-top:60px; opacity:0.5; font-size:0.8rem; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
-                    &copy; 2026 Madcap Marketing. All rights reserved.
-                </div>
+        <section id="packages">
+            <div class="section-header reveal">
+                <h2>Our Packages</h2>
+                <div class="line"></div>
             </div>
+            <div class="pricing-grid">
+                
+                <div class="package-card reveal">
+                    <div class="pkg-header">
+                        <h3>The Creator</h3>
+                        <p style="font-size:0.8rem; opacity:0.7">(Reels Production)</p>
+                    </div>
+                    <table>
+                        <tr><th>Qty</th><th>Standard</th><th>Collab</th></tr>
+                        <tr><td>4</td><td>&#8377;2,000</td><td>&#8377;3,000</td></tr>
+                        <tr><td>6</td><td>&#8377;2,700</td><td>&#8377;4,200</td></tr>
+                        <tr><td>8</td><td>&#8377;3,500</td><td>&#8377;5,500</td></tr>
+                    </table>
+                    <a href="#contact" class="btn-pkg">Select Plan</a>
+                </div>
+
+                <div class="package-card reveal">
+                    <div class="pkg-header">
+                        <h3>The Futurist</h3>
+                        <p style="font-size:0.8rem; opacity:0.7">(AI Generated)</p>
+                    </div>
+                    <table>
+                        <tr><th>Qty</th><th>Standard</th><th>Collab</th></tr>
+                        <tr><td>3</td><td>&#8377;900</td><td>&#8377;1,650</td></tr>
+                        <tr><td>5</td><td>&#8377;1,250</td><td>&#8377;2,500</td></tr>
+                        <tr><td>7</td><td>&#8377;1,800</td><td>&#8377;3,550</td></tr>
+                    </table>
+                    <a href="#contact" class="btn-pkg">Select Plan</a>
+                </div>
+
+                <div class="package-card reveal">
+                    <div class="pkg-header gold">
+                        <h3>The Outreach</h3>
+                    </div>
+                    <div class="price-highlight">
+                        &#8377;3 - &#8377;4
+                        <div style="font-size:0.8rem; color:#0A192F; opacity:0.7; font-weight:400; margin-top:5px;">PER CALL EXECUTED</div>
+                    </div>
+                    <a href="#contact" class="btn-pkg" style="background:#0A192F; color:white;">Start Calling</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" class="footer reveal">
+            <h2 style="color:white; margin-bottom:40px; font-family:'Montserrat', sans-serif;">Let's Talk</h2>
+            <div class="contact-links">
+                <a href="tel:+918446131404">📞 Call Shivv</a>
+                <a href="tel:+918668460482">📞 Call Uday</a>
+            </div>
+            <div style="margin-top:30px;">
+                <a href="mailto:shivnathkamble23@gmail.com" style="color:var(--gold-real); text-decoration:none;">shivnathkamble23@gmail.com</a>
+            </div>
+            <div class="copyright">&copy; 2026 Madcap Marketing. Built for the Future.</div>
         </section>
 
     </div>
 
     <script>
-        // --- 1. HOLLYWOOD INTRO LOGIC ---
-        // Lock scroll initially
+        // 1. INTRO ORCHESTRATION
+        // Start simple: lock scroll
         document.body.style.overflow = 'hidden';
 
         window.addEventListener('load', () => {
             const intro = document.getElementById('intro-layer');
             const main = document.getElementById('main-content');
             
-            // Sequence: Pulse Logo -> Slide Text -> Lift Curtain -> Unlock Scroll
+            // Wait for M animation + Text Slide (approx 3s)
             setTimeout(() => {
-                // Lift the curtain
+                // Lift curtain
                 intro.style.transform = 'translateY(-100%)';
                 
-                // Reveal main site smoothly
+                // Show site
                 setTimeout(() => {
                     main.classList.add('active');
-                    // Unlock scroll
                     document.body.style.overflow = 'auto';
                 }, 500);
-            }, 3800); // 3.8s total intro time
+            }, 3200);
         });
 
-        // --- 2. STAGGERED SCROLL REVEAL ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    // Add a slight delay based on index to create "one-by-one" effect
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 200); // 200ms delay between cards
-                    observer.unobserve(entry.target); // Stop watching once shown
+        // 2. SCROLL REVEAL ANIMATION
+        window.addEventListener('scroll', reveal);
+        function reveal(){
+            var reveals = document.querySelectorAll('.reveal');
+            for(var i = 0; i < reveals.length; i++){
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if(elementTop < windowHeight - elementVisible){
+                    reveals[i].classList.add('active');
                 }
-            });
-        }, { threshold: 0.1 });
-
-        const scrollElements = document.querySelectorAll('.js-scroll');
-        scrollElements.forEach((el) => observer.observe(el));
+            }
+        }
     </script>
 </body>
 </html>
