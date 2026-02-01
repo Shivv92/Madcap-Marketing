@@ -1,480 +1,509 @@
 <!DOCTYPE html>
+<!-- Updated: 2026-02-01 - Merged CSS and JS into single file -->
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Madcap Marketing | Future Tech</title>
-    
-    <!-- Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madcap Marketing | Packages</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
-
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
-        /* --- 1. CORE VARIABLES --- */
         :root {
-            --bg-deep: #030305;
-            --bg-panel: #0a0f14;
-            --neon-cyan: #00f3ff;
-            --neon-gold: #ffd700;
-            --neon-purple: #bc13fe;
-            --text-main: #e0e6ed;
-            --text-muted: #94a3b8;
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-bg: rgba(10, 15, 20, 0.7);
+            --navy: #0e2a47;
+            /* Based on Logo */
+            --gold: #f0a500;
+            /* Based on Poster Header */
+            --gold-dark: #cfaa04;
+            --white: #ffffff;
+            --light: #f4f7f6;
+            --text: #333;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            overflow-x: hidden;
-            perspective: 1000px;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        /* --- 2. 3D MOVING GRID BACKGROUND --- */
-        .cyber-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: 
-                linear-gradient(transparent 0%, var(--bg-deep) 90%),
-                repeating-linear-gradient(90deg, rgba(0, 243, 255, 0.03) 0px, rgba(0, 243, 255, 0.03) 1px, transparent 1px, transparent 40px),
-                repeating-linear-gradient(0deg, rgba(0, 243, 255, 0.03) 0px, rgba(0, 243, 255, 0.03) 1px, transparent 1px, transparent 40px);
-            transform: perspective(500px) rotateX(20deg) scale(1.5) translateY(-50px);
-            z-index: -2;
-            animation: gridMove 20s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 40px; } }
-
-        /* Floating Glow Orbs */
-        .orb {
-            position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: -1;
-            animation: floatOrb 10s ease-in-out infinite alternate;
-        }
-        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--neon-purple), transparent); }
-        .orb-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, var(--neon-cyan), transparent); animation-delay: -5s; }
-        @keyframes floatOrb { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 30px); } }
-
-        /* --- 3. SYSTEM BOOT INTRO (INSTANT START) --- */
-        #intro-layer {
-            position: fixed; inset: 0; background: var(--bg-deep); z-index: 99999;
-            display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: opacity 0.8s ease-in-out, visibility 0.8s;
-            opacity: 1; visibility: visible;
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        #intro-layer.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .m-logo-wrapper {
-            position: relative;
-            width: clamp(80px, 20vw, 140px); height: clamp(80px, 20vw, 140px);
-            display: flex; justify-content: center; align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .m-logo-intro {
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            font-size: clamp(3rem, 10vw, 6rem); color: var(--bg-deep);
-            background: var(--neon-gold);
-            width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-            
-            /* INSTANT POP - No Delay */
-            transform: scale(0);
-            animation: logoPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        .intro-text-mask {
-            overflow: hidden; 
-            height: clamp(40px, 10vw, 80px);
-            display: flex; align-items: center; justify-content: center;
-        }
-        
-        .intro-text {
-            font-family: 'Orbitron', sans-serif; font-weight: 700;
-            font-size: clamp(1.2rem, 5vw, 2.5rem); color: var(--text-main);
-            letter-spacing: 3px; text-transform: uppercase;
-            text-align: center; line-height: 1;
-            
-            /* SLIDES UP AFTER LOGO */
-            transform: translateY(100%);
-            animation: textGen 0.6s ease-out forwards 0.5s;
-        }
-        .intro-text span { color: var(--neon-gold); }
-
-        @keyframes logoPop { 
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; } 
-        }
-        @keyframes textGen { 
-            0% { transform: translateY(100%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; } 
-        }
-
-        /* --- 4. MAIN LAYOUT --- */
-        #main-content { 
-            /* Visible immediately behind intro */
-            opacity: 1; 
-            filter: blur(0); 
-        }
-
+        /* Navbar */
         nav {
-            position: fixed; top: 0; width: 100%; z-index: 100; padding: 15px 0;
-            background: rgba(3, 3, 5, 0.8); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
+            background: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .nav-inner {
-            max-width: 1300px; margin: 0 auto; padding: 0 25px;
-            display: flex; justify-content: space-between; align-items: center;
+
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .brand { 
-            font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.2rem; 
-            color: var(--text-main); display: flex; align-items: center; gap: 10px; letter-spacing: 2px; 
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--navy);
+            font-size: 1.2rem;
         }
-        .mini-m { 
-            background: var(--neon-gold); color: var(--bg-deep); padding: 2px 8px; 
-            font-family: 'Montserrat', sans-serif; font-weight: 900; 
-            clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%); 
+
+        .logo img {
+            height: 50px;
+            width: auto;
         }
-        .cta-btn {
-            border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
-            padding: 8px 20px; text-decoration: none; font-family: 'Orbitron', sans-serif;
-            font-weight: 600; font-size: 0.8rem; transition: 0.3s;
-            text-transform: uppercase; letter-spacing: 1px;
-            position: relative; overflow: hidden;
+
+        .btn-nav {
+            background: var(--navy);
+            color: var(--white);
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
         }
-        .cta-btn:hover { background: var(--neon-cyan); color: var(--bg-deep); box-shadow: 0 0 20px rgba(0, 243, 255, 0.4); }
 
         /* Hero */
         .hero {
-            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 0 20px; position: relative;
+            background: linear-gradient(135deg, var(--navy) 0%, #163b61 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 80px 20px;
         }
+
         .hero h1 {
-            font-family: 'Montserrat', sans-serif; font-weight: 900;
-            font-size: clamp(2.8rem, 9vw, 6.5rem);
-            line-height: 1.1; margin-bottom: 25px; color: var(--text-main);
-            text-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
-        }
-        .hero .highlight { 
-            color: transparent; -webkit-text-stroke: 1px var(--neon-cyan);
-            position: relative; display: inline-block;
-        }
-        .scramble-text { display: inline-block; color: var(--neon-cyan); font-family: 'Orbitron', sans-serif; }
-        .hero p { 
-            max-width: 600px; font-size: clamp(1rem, 3vw, 1.3rem); 
-            margin-bottom: 40px; color: var(--text-muted); line-height: 1.6;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
-        .btn-group {
-            display: flex; flex-direction: column; gap: 20px;
-            width: 100%; max-width: 300px;
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
         }
 
-        .glow-btn {
-            padding: 18px 0; background: var(--neon-gold); color: var(--bg-deep);
-            font-family: 'Orbitron', sans-serif; font-weight: 800; text-decoration: none; 
-            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-            transition: 0.3s; text-transform: uppercase; letter-spacing: 2px;
-            position: relative; z-index: 1; display: block; width: 100%;
-        }
-        .glow-btn::before {
-            content:''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; opacity: 0; z-index: -1; transition: 0.3s;
-        }
-        .glow-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 215, 0, 0.5); }
-
-        .glow-btn.cyan {
-            background: var(--neon-cyan);
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
-        }
-        .glow-btn.cyan:hover {
-            box-shadow: 0 0 60px rgba(0, 243, 255, 0.6);
+        .btn-main {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: 0.3s;
         }
 
-        /* --- 5. CARDS & SECTIONS --- */
-        section { padding: 120px 20px; max-width: 1300px; margin: 0 auto; position: relative; }
-        .section-head { text-align: center; margin-bottom: 80px; }
-        .section-head h2 { 
-            font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); 
-            color: var(--text-main); text-transform: uppercase; letter-spacing: 3px; 
-        }
-        .section-head .bar { 
-            width: 80px; height: 3px; background: var(--neon-cyan); 
-            margin: 20px auto 0; box-shadow: 0 0 15px var(--neon-cyan); 
+        .btn-main:hover {
+            background: #ffbe2e;
+            transform: translateY(-2px);
         }
 
-        .grid-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; perspective: 1000px; }
-
-        .holo-card {
-            background: linear-gradient(145deg, rgba(15,20,30,0.6) 0%, rgba(5,5,10,0.8) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            padding: 40px; border-radius: 10px;
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            transition: transform 0.1s ease-out;
-            transform-style: preserve-3d;
+        /* Packages */
+        #packages {
+            padding: 60px 0;
         }
-        
-        .card-content { transform: translateZ(30px); width: 100%; }
 
-        .holo-card::after {
-            content: ''; position: absolute; inset: 0; z-index: -1;
-            background: linear-gradient(45deg, transparent, rgba(0, 243, 255, 0.1), transparent);
-            transform: translateX(-100%); transition: 0.5s;
+        .section-title {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--navy);
+            margin-bottom: 40px;
         }
-        .holo-card:hover { border-color: rgba(0, 243, 255, 0.3); box-shadow: 0 10px 40px -10px rgba(0, 243, 255, 0.15); }
-        .holo-card:hover::after { transform: translateX(100%); }
 
-        /* Founders */
-        .avatar {
-            width: 100px; height: 100px;
-            border: 2px solid var(--neon-gold);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 2.5rem; color: var(--neon-gold); background: rgba(255, 215, 0, 0.05);
-            margin-bottom: 25px; margin-left: auto; margin-right: auto; font-weight: 900; font-family: 'Orbitron', sans-serif;
-            clip-path: polygon(20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%, 0 20%);
+        .section-title.white {
+            color: var(--white);
         }
-        .name { font-size: 2rem; color: var(--text-main); font-weight: 700; margin-bottom: 5px; font-family: 'Montserrat', sans-serif; }
-        .role { color: var(--neon-cyan); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; font-family: 'Orbitron', sans-serif;}
-        .desc { font-size: 1rem; color: var(--text-muted); line-height: 1.7; }
 
-        /* Packages (Unified Blue) */
-        .pkg-title { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--text-main); margin-bottom: 25px; letter-spacing: 1px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-        th { text-transform: uppercase; font-size: 0.75rem; color: var(--neon-cyan); padding: 12px; border-bottom: 1px solid var(--glass-border); letter-spacing: 1px; font-family: 'Orbitron', sans-serif; }
-        td { padding: 15px 5px; color: var(--text-main); font-size: 1rem; border-bottom: 1px solid var(--glass-border); }
-        .big-price { font-family: 'Montserrat', sans-serif; font-size: 3rem; color: var(--text-main); font-weight: 800; margin: 15px 0; }
-        
-        /* UNIFIED BLUE BUTTON FOR PACKAGES */
-        .btn-full {
-            width: 100%; padding: 16px; background: transparent;
-            color: var(--neon-cyan); border: 1px solid var(--neon-cyan);
-            text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.3s; position: relative; overflow: hidden; font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem; display: block;
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
-        .btn-full:hover { background: var(--neon-cyan); color: var(--bg-deep); box-shadow: 0 0 30px rgba(0, 243, 255, 0.4); }
 
-        /* Footer */
-        .footer { background: #020406; text-align: center; padding: 100px 20px; border-top: 1px solid var(--glass-border); position: relative; z-index: 10; }
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; margin-top: 50px; }
-        .contact-card h4 { color: var(--neon-gold); margin-bottom: 20px; font-size: 1.4rem; font-family: 'Orbitron', sans-serif; }
-        .link-item { 
-            display: block; color: var(--text-main); text-decoration: none; 
-            margin: 15px 0; font-size: 1.1rem; transition: 0.3s; opacity: 0.8; word-break: break-all;
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            transition: 0.3s;
         }
-        .link-item:hover { color: var(--neon-cyan); opacity: 1; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); transform: translateX(5px); }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
 
+        .card-header {
+            padding: 20px;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .blue-header {
+            background: var(--navy);
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .gold-header {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* Tables within cards */
+        .table-wrapper {
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th {
+            background: #f8f9fa;
+            padding: 12px;
+            font-size: 0.85rem;
+            color: var(--navy);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 15px 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Outreach Card Body */
+        .card-body {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .price-big {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .per-call {
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .desc {
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .btn-card {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        /* Contact Footer */
+        .footer-section {
+            background: var(--navy);
+            padding: 60px 0 20px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .contact-box h3 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .contact-box a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .contact-box a:hover {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-flex {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Intro Overlay */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--navy);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .intro-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-m {
+            color: var(--gold);
+        }
+
+        .brand-rest {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            opacity: 0;
+            transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease-in;
+        }
     </style>
 </head>
+
 <body>
 
-    <div class="cyber-grid"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-
-    <!-- INTRO -->
-    <div id="intro-layer">
-        <div class="m-logo-wrapper">
-            <div class="m-logo-intro">M</div>
+    <nav>
+        <div class="container nav-flex">
+            <div class="logo">
+                <img src="logo.jpg" alt="Madcap Marketing Logo">
+                <span>MADCAP MARKETING</span>
+            </div>
+            <a href="#contact" class="btn-nav">Contact Us</a>
         </div>
-        <div class="intro-text-mask">
-            <div class="intro-text">ADCAP <span>MARKETING</span></div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Amplify Your Brand</h1>
+            <p>From viral Reels to AI-driven content and direct outreach, we deliver results that craze.</p>
+            <a href="#packages" class="btn-main">View Packages</a>
         </div>
-    </div>
+    </header>
 
-    <!-- MAIN -->
-    <div id="main-content">
-        <nav>
-            <div class="nav-inner">
-                <div class="brand"><span class="mini-m">M</span> MADCAP</div>
-                <a href="#contact" class="cta-btn">Contact Us</a>
-            </div>
-        </nav>
+    <section id="packages">
+        <div class="container">
+            <h2 class="section-title">Our Packages</h2>
 
-        <section class="hero">
-            <h1>Amplify Your <br><span class="highlight">Digital Presence</span></h1>
-            <p>We architect viral moments, engineering AI-driven content and direct connections that scale your business to the next dimension.</p>
-            
-            <div class="btn-group">
-                <a href="#packages" class="glow-btn cyan">View Packages</a>
-            </div>
-        </section>
+            <div class="pricing-grid">
 
-        <section id="packages">
-            <div class="section-head reveal">
-                <h2>Our Packages</h2>
-                <div class="bar"></div>
-            </div>
-            <div class="grid-box">
-                <!-- Creator (Blue) -->
-                <div class="holo-card js-tilt reveal" style="border-color: var(--neon-cyan);">
-                    <div class="card-content">
-                        <h3 class="pkg-title" style="color: var(--neon-cyan);">The Creator</h3>
+                <div class="card">
+                    <div class="card-header blue-header">
+                        <h3>The Creator Package</h3>
+                        <p>(Reels)</p>
+                    </div>
+                    <div class="table-wrapper">
                         <table>
-                            <tr><th>Qty</th><th>Standard</th><th>Collab</th></tr>
-                            <tr><td>4</td><td>₹2,000</td><td>₹3,000</td></tr>
-                            <tr><td>6</td><td>₹2,700</td><td>₹4,200</td></tr>
-                            <tr><td>8</td><td>₹3,500</td><td>₹5,500</td></tr>
+                            <thead>
+                                <tr>
+                                    <th>Quantity</th>
+                                    <th>Standard</th>
+                                    <th>With Collab</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>4 Reels</td>
+                                    <td>₹2,000</td>
+                                    <td>₹3,000</td>
+                                </tr>
+                                <tr>
+                                    <td>6 Reels</td>
+                                    <td>₹2,700</td>
+                                    <td>₹4,200</td>
+                                </tr>
+                                <tr>
+                                    <td>8 Reels</td>
+                                    <td>₹3,500</td>
+                                    <td>₹5,500</td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <a href="#contact" class="btn-full">Select Package</a>
                     </div>
                 </div>
-                <!-- Futurist (Blue) -->
-                <div class="holo-card js-tilt reveal" style="border-color: var(--neon-cyan);">
-                    <div class="card-content">
-                        <h3 class="pkg-title" style="color: var(--neon-cyan);">The Futurist</h3>
+
+                <div class="card">
+                    <div class="card-header blue-header">
+                        <h3>The Futurist Package</h3>
+                        <p>(AI Reels)</p>
+                    </div>
+                    <div class="table-wrapper">
                         <table>
-                            <tr><th>Qty</th><th>Standard</th><th>Collab</th></tr>
-                            <tr><td>3</td><td>₹900</td><td>₹1,650</td></tr>
-                            <tr><td>5</td><td>₹1,250</td><td>₹2,500</td></tr>
-                            <tr><td>7</td><td>₹1,800</td><td>₹3,550</td></tr>
+                            <thead>
+                                <tr>
+                                    <th>Quantity</th>
+                                    <th>Standard</th>
+                                    <th>With Collab</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>3 Reels</td>
+                                    <td>₹900</td>
+                                    <td>₹1,650</td>
+                                </tr>
+                                <tr>
+                                    <td>5 Reels</td>
+                                    <td>₹1,250</td>
+                                    <td>₹2,500</td>
+                                </tr>
+                                <tr>
+                                    <td>7 Reels</td>
+                                    <td>₹1,800</td>
+                                    <td>₹3,550</td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <a href="#contact" class="btn-full">Select Package</a>
                     </div>
                 </div>
-                <!-- Outreach (Blue) -->
-                <div class="holo-card js-tilt reveal" style="border-color: var(--neon-cyan);">
-                    <div class="card-content">
-                        <h3 class="pkg-title" style="color:var(--neon-cyan)">The Outreach</h3>
-                        <div class="big-price">₹3 - ₹4</div>
-                        <p class="role" style="opacity:0.8; color:var(--neon-cyan)">PER CALL EXECUTED</p>
-                        <br>
-                        <a href="#contact" class="btn-full" style="background:var(--neon-cyan); color:var(--bg-deep); border-color:var(--neon-cyan)">Select Package</a>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- FOUNDERS (Moved to End) -->
-        <section id="founders">
-            <div class="section-head reveal">
-                <h2>The Visionaries</h2>
-                <div class="bar"></div>
-            </div>
-            <div class="grid-box">
-                <!-- SHIVV -->
-                <div class="holo-card js-tilt reveal">
-                    <div class="card-content">
-                        <div class="avatar">S</div>
-                        <div class="name">Shivv</div>
-                        <div class="role">Founder & Strategist</div>
-                        <p class="desc">Mastermind behind high-impact content architecture and brand scalability protocol.</p>
+                <div class="card">
+                    <div class="card-header gold-header">
+                        <h3>The Outreach Package</h3>
+                        <p>(Calling)</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="price-big">₹3 to ₹4</div>
+                        <p class="per-call">per call</p>
+                        <hr>
+                        <p class="desc">Professional cold calling and direct outreach to potential clients.</p>
+                        <a href="#contact" class="btn-card">Start Calling</a>
                     </div>
                 </div>
-                <!-- UDAY -->
-                <div class="holo-card js-tilt reveal">
-                    <div class="card-content">
-                        <div class="avatar">U</div>
-                        <div class="name">Uday</div>
-                        <div class="role">Founder & Tech Lead</div>
-                        <p class="desc">Leveraging advanced AI & automation to ensure your marketing runs like a well-oiled machine.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="contact" class="footer reveal">
-            <h2 style="color:var(--text-main); margin-bottom:20px; font-family:'Orbitron', sans-serif; font-size:2.5rem;">Get In Touch</h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="footer-section">
+        <div class="container">
+            <h2 class="section-title white">Get In Touch</h2>
             <div class="contact-grid">
-                <div class="contact-card">
-                    <h4>Contact Shivv</h4>
-                    <a href="tel:+918446131404" class="link-item">📞 +91 84461 31404</a>
-                    <a href="mailto:shivnathkamble23@gmail.com" class="link-item">✉️ shivnathkamble23@gmail.com</a>
+
+                <div class="contact-box">
+                    <h3>Call Us</h3>
+                    <a href="tel:+918446131404">+91 84461 31404</a>
+                    <a href="tel:+918668460482">+91 86684 60482</a>
                 </div>
-                <div class="contact-card">
-                    <h4>Contact Uday</h4>
-                    <a href="tel:+918668460482" class="link-item">📞 +91 86684 60482</a>
-                    <a href="mailto:udaykumbhar618@gmail.com" class="link-item">✉️ udaykumbhar618@gmail.com</a>
+
+                <div class="contact-box">
+                    <h3>Email Us</h3>
+                    <a href="mailto:shivnathkamble23@gmail.com">shivnathkamble23@gmail.com</a>
+                    <a href="mailto:udaykumbhar618@gmail.com">udaykumbhar618@gmail.com</a>
                 </div>
             </div>
-            <div style="margin-top:80px; opacity:0.3; font-size:0.8rem;">&copy; 2026 Madcap Marketing. Future Built.</div>
-        </section>
+            <div class="copyright">
+                &copy; 2026 Madcap Marketing. All rights reserved.
+            </div>
+        </div>
+    </section>
 
+    <div id="intro-overlay">
+        <div class="intro-text">
+            <span class="brand-m">M</span><span class="brand-rest">adcap Marketing</span>
+        </div>
     </div>
 
     <script>
-        // 1. INTRO - Optimized for Speed
-        document.body.style.overflow = 'hidden';
-        
-        // Wait for DOM ready instead of full window load to prevent blank screen
-        document.addEventListener("DOMContentLoaded", () => {
-            const intro = document.getElementById('intro-layer');
-            const main = document.getElementById('main-content');
-            
-            // Wait 2.5s for sequence
+        document.addEventListener('DOMContentLoaded', () => {
+            const brandRest = document.querySelector('.brand-rest');
+            const overlay = document.getElementById('intro-overlay');
+
+            // Wait a brief moment before starting the text reveal
             setTimeout(() => {
-                // Fade out neatly
-                intro.classList.add('hidden'); 
-                
-                // Unlock Scrolling
-                document.body.style.overflow = 'auto';
-                scrambleText();
-            }, 2500); 
+                brandRest.style.width = brandRest.scrollWidth + 'px';
+                brandRest.style.opacity = '1';
+            }, 500);
+
+            // After text animation finishes, fade out overlay
+            // Text animation takes 1.5s approx, plus 500ms delay = 2s
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+
+                // Remove from DOM after transition
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 800); // 0.8s transition time for overlay fade
+            }, 2500);
         });
-
-        // 2. SCROLL REVEAL ANIMATION
-        window.addEventListener('scroll', () => {
-            document.querySelectorAll('.reveal').forEach(el => {
-                if(el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add('active');
-            });
-        });
-
-        // 3. TEXT SCRAMBLE EFFECT
-        function scrambleText() {
-            const el = document.querySelector('.highlight');
-            if(!el) return;
-            const final = "Digital Presence";
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-            let iteration = 0;
-            
-            const interval = setInterval(() => {
-                el.innerText = final.split("").map((letter, index) => {
-                    if(index < iteration) return final[index];
-                    return chars[Math.floor(Math.random() * chars.length)]
-                }).join("");
-                
-                if(iteration >= final.length) clearInterval(interval);
-                iteration += 1/3; 
-            }, 30);
-        }
-
-        // 4. 3D TILT EFFECT (Desktop Only)
-        if (window.matchMedia("(pointer: fine)").matches) {
-            document.querySelectorAll('.js-tilt').forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = ((y - centerY) / centerY) * -5; 
-                    const rotateY = ((x - centerX) / centerX) * 5;
-
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
-                });
-            });
-        }
     </script>
 </body>
+
 </html>
