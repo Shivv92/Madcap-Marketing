@@ -56,6 +56,36 @@
             padding: 0 20px;
         }
 
+        /* --- Animations --- */
+        @keyframes gridMove {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 0 50px, 0 50px; } /* Changed to vertical move to keep it centered */
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(0, 243, 255, 0.4); text-shadow: 0 0 5px var(--neon-cyan); }
+            50% { box-shadow: 0 0 25px rgba(0, 243, 255, 0.8); text-shadow: 0 0 15px var(--neon-cyan); border-color: var(--bright-white); }
+            100% { box-shadow: 0 0 10px rgba(0, 243, 255, 0.4); text-shadow: 0 0 5px var(--neon-cyan); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal-node {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal-node.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* --- Navbar --- */
         nav {
             background: rgba(2, 11, 22, 0.9);
@@ -98,6 +128,7 @@
             box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
             border-radius: 4px;
             text-shadow: 0 0 5px var(--neon-cyan);
+            animation: pulseGlow 3s infinite ease-in-out;
         }
 
         .btn-nav {
@@ -141,6 +172,7 @@
             transform-origin: center top;
             z-index: -1;
             mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            animation: gridMove 5s linear infinite;
         }
 
         .hero h1 {
@@ -198,9 +230,9 @@
             margin-bottom: 60px;
             text-transform: uppercase;
             position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
+            /* Removed transforms that were causing conflict with animations */
+            display: block;
+            margin: 0 auto 60px;
             letter-spacing: 2px;
         }
 
@@ -219,8 +251,11 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            /* Changed minmax to 280px to fit better on mobile */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
+            /* Center grid items */
+            justify-content: center;
         }
 
         .card {
@@ -235,8 +270,12 @@
             flex-direction: column;
         }
 
+        /* Add delay for stagger effect in JS, or hardcode generic n-th child */
+        .pricing-grid .card:nth-child(2) { transition-delay: 0.2s; }
+        .pricing-grid .card:nth-child(3) { transition-delay: 0.4s; }
+
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) !important; /* Override reveal transform */
             border-color: var(--neon-cyan);
             box-shadow: 0 0 40px rgba(0, 243, 255, 0.15);
         }
@@ -368,6 +407,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
             margin-top: 20px;
+            justify-content: center; /* Centered grid items */
         }
 
         .visionary-card {
@@ -378,7 +418,11 @@
             border-radius: 15px;
             position: relative;
             transition: 0.3s;
+            /* Floating animation */
+            animation: float 6s ease-in-out infinite;
         }
+
+        .visionary-grid .visionary-card:nth-child(2) { animation-delay: 1s; }
 
         /* Blue Accent Line */
         .visionary-card::before {
@@ -390,20 +434,20 @@
         }
 
         .visionary-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-15px); /* Slightly more movement on hover */
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
             border-color: var(--electric-blue);
         }
 
         .visionary-role {
-            font-family: 'Montserrat', sans-serif; /* Changed to bolder font */
+            font-family: 'Montserrat', sans-serif;
             color: var(--electric-blue);
             text-transform: uppercase;
             letter-spacing: 3px;
             font-size: 0.9rem;
-            font-weight: 800; /* Extra bold */
+            font-weight: 800;
             margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(45, 108, 223, 0.4); /* Added glow for emphasis */
+            text-shadow: 0 0 10px rgba(45, 108, 223, 0.4);
         }
 
         .visionary-name {
@@ -552,20 +596,22 @@
 
     <header class="hero">
         <div class="container">
-            <h1>Amplify Your Brand</h1>
-            <p>From viral Reels to AI-driven content and direct outreach, we deliver results that craze. Future-proof your marketing today.</p>
-            <a href="#packages" class="btn-main">View Packages</a>
+            <h1 class="reveal-node">Amplify Your Brand</h1>
+            <p class="reveal-node">From viral Reels to AI-driven content and direct outreach, we deliver results that craze. Future-proof your marketing today.</p>
+            <div class="reveal-node">
+                <a href="#packages" class="btn-main">View Packages</a>
+            </div>
         </div>
     </header>
 
     <section id="packages">
         <div class="container">
-            <h2 class="section-title">Our Packages</h2>
+            <h2 class="section-title reveal-node">Our Packages</h2>
 
             <div class="pricing-grid">
 
                 <!-- Reels Package -->
-                <div class="card">
+                <div class="card reveal-node">
                     <div class="card-header">
                         <h3>The Creator</h3>
                         <p>High-Impact Reels</p>
@@ -604,7 +650,7 @@
                 </div>
 
                 <!-- AI Package -->
-                <div class="card">
+                <div class="card reveal-node">
                     <div class="card-header">
                         <h3>The Futurist</h3>
                         <p>AI-Driven Content</p>
@@ -643,7 +689,7 @@
                 </div>
 
                 <!-- Calling Package -->
-                <div class="card">
+                <div class="card reveal-node">
                     <div class="card-header">
                         <h3>The Outreach</h3>
                         <p>Direct Calling</p>
@@ -664,12 +710,12 @@
 
     <section id="visionaries">
         <div class="container">
-            <h2 class="section-title">The Visionaries</h2>
+            <h2 class="section-title reveal-node">The Visionaries</h2>
             
             <div class="visionary-grid">
                 
                 <!-- Shivv -->
-                <div class="visionary-card">
+                <div class="visionary-card reveal-node">
                     <div class="visionary-role">Founder</div>
                     <div class="visionary-name">Shivv</div>
                     <div class="visionary-title">Mastermind & Strategist</div>
@@ -679,7 +725,7 @@
                 </div>
 
                 <!-- Uday -->
-                <div class="visionary-card">
+                <div class="visionary-card reveal-node">
                     <div class="visionary-role">Founder</div>
                     <div class="visionary-name">Uday</div>
                     <div class="visionary-title">Tech Genius</div>
@@ -694,16 +740,16 @@
 
     <section id="contact" class="footer-section">
         <div class="container">
-            <h2 class="section-title" style="margin-bottom: 40px; font-size: 2rem;">Initiate Protocol</h2>
+            <h2 class="section-title reveal-node" style="margin-bottom: 40px; font-size: 2rem;">Initiate Protocol</h2>
             <div class="contact-grid">
 
-                <div class="contact-box">
+                <div class="contact-box reveal-node">
                     <h3>Secure Line</h3>
                     <a href="tel:+918446131404">+91 84461 31404</a>
                     <a href="tel:+918668460482">+91 86684 60482</a>
                 </div>
 
-                <div class="contact-box">
+                <div class="contact-box reveal-node">
                     <h3>Digital Uplink</h3>
                     <a href="mailto:shivnathkamble23@gmail.com">shivnathkamble23@gmail.com</a>
                     <a href="mailto:udaykumbhar618@gmail.com">udaykumbhar618@gmail.com</a>
@@ -717,6 +763,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Intro Animation Logic
             const brandRest = document.querySelector('.brand-rest');
             const overlay = document.getElementById('intro-overlay');
 
@@ -729,8 +776,31 @@
                 overlay.style.opacity = '0';
                 setTimeout(() => {
                     overlay.style.display = 'none';
+                    // Trigger first paint animations after overlay is gone
+                    initScrollReveal();
                 }, 800); 
             }, 2200);
+
+            // Scroll Reveal Observer
+            function initScrollReveal() {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            observer.unobserve(entry.target); // Only animate once
+                        }
+                    });
+                }, observerOptions);
+
+                const revealElements = document.querySelectorAll('.reveal-node');
+                revealElements.forEach(el => observer.observe(el));
+            }
         });
     </script>
 </body>
