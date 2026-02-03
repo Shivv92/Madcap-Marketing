@@ -1013,17 +1013,36 @@
                 </div>
 
                 <div class="contact-form-box reveal-node">
-                    <form>
+                    <!-- WORKING FORM CONFIGURATION -->
+                    <form action="https://formsubmit.co/shivnathkamble23@gmail.com" method="POST">
+                        
+                        <!-- Send copy to Uday -->
+                        <input type="hidden" name="_cc" value="udaykumbhar618@gmail.com">
+                        
+                        <!-- Subject line in email -->
+                        <input type="hidden" name="_subject" value="🚀 NEW MISSION BRIEF: Madcap Agency Lead">
+                        
+                        <!-- Turn off captcha for speed -->
+                        <input type="hidden" name="_captcha" value="false">
+                        
+                        <!-- Redirect back to site (Optional) -->
+                        <!-- <input type="hidden" name="_next" value="https://yourwebsite.com"> -->
+
                         <div class="input-group">
-                            <input type="text" required placeholder=" ">
+                            <input type="text" name="Agent Name" required placeholder=" ">
                             <label>Agent Name</label>
                         </div>
                         <div class="input-group">
-                            <input type="email" required placeholder=" ">
+                            <input type="email" name="Email" required placeholder=" ">
                             <label>Comms ID (Email)</label>
                         </div>
+                        <!-- New Phone Field -->
                         <div class="input-group">
-                            <textarea required placeholder=" " rows="4"></textarea>
+                            <input type="tel" name="Phone Number" placeholder=" ">
+                            <label>Secure Line (Phone)</label>
+                        </div>
+                        <div class="input-group">
+                            <textarea name="Mission Brief" required placeholder=" " rows="4"></textarea>
                             <label>Mission Brief</label>
                         </div>
                         <button type="submit" class="btn-main" style="width: 100%; border: none; cursor: pointer;">
